@@ -5,8 +5,7 @@ load:
   mov ch, 0
   mov cl, 2
   mov dh, 0
-  mov es, [E]
-  mov bx, 0
+  mov bx, E
   int 13h
   jc .error
   mov si, LOADED
