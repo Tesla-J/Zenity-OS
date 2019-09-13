@@ -1,3 +1,4 @@
+[bits 16]
 ;carrega os restantes sectores
 load:
   mov ah, 2
