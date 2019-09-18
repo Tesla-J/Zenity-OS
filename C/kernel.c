@@ -1,3 +1,4 @@
+#include "HEADER/keyboard.h"
 #include "HEADER/screen.h"
 
 void zmain(void){
@@ -5,11 +6,10 @@ void zmain(void){
   int index=0;
 
   //print(str,13,0xf);
-  p();
+  putchar('X');
 
-  while(str[index++]){
-    p();
-    put_char(str[index],13);
+  /*while(str[index++]){
+    putchar(str[index]);
   }
-  while(1); //loop infinito
+  while(1); //loop infinito*/
 }
