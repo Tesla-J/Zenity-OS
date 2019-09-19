@@ -19,8 +19,10 @@
 /* PROTOTIPOS */
 void print(char str[], int linha, int attr);
 void p(void);
-void putchar_at(unsigned char ch, unsigned short col, unsigned short linha, unsigned char attr);
+void putchar_at(unsigned char ch, short col, short linha, unsigned char attr);
 void putchar(char ch);
+void putstr_at(char str[], short col, short linha, unsigned short attr);
+void putstr(char str[]);
 unsigned short get_cursor_offset(void);
 unsigned short get_offset(unsigned short col, unsigned short linha);
 void set_cursor_offset(unsigned short offset);
@@ -28,7 +30,7 @@ void clear(void);
 
 
 //funcao para imprimir caractere numa posicao especifica
-void putchar_at(unsigned char ch, unsigned short col, unsigned short linha, unsigned char attr){
+void putchar_at(unsigned char ch, short col, short linha, unsigned char attr){
   unsigned short offset;
   unsigned char *mem = (unsigned char*) VID_MEM;
 
@@ -43,8 +45,8 @@ void putchar_at(unsigned char ch, unsigned short col, unsigned short linha, unsi
   else
     offset = get_cursor_offset();
 
-  mem [offset] = ch;
-  mem [offset+1] = attr;
+  mem [offset+2] = ch;
+  mem [offset+3] = attr;
   offset += 2;
   set_cursor_offset(offset);
 
@@ -54,6 +56,30 @@ void putchar_at(unsigned char ch, unsigned short col, unsigned short linha, unsi
 //funcao para imprimir caractere
 void putchar(char ch){
   putchar_at(ch, -1,-1,0);
+  return;
+}
+
+//funcao para imprimir string em posicao especifica
+void putstr_at(char str[], short col, short linha, unsigned short attr){
+  unsigned short i=0;
+
+  if(col >= MAX_COL || linha >= MAX_ROW) return;
+
+  while(1){
+    putchar_at(str[i], col, linha, attr);
+    ++i;
+    if (!str[i]) break;
+  }return;
+}
+
+//funcao imprimir string
+void putstr(char str[]){
+  unsigned int i=0;
+  while(1){
+    putchar(str[i]);
+    ++i;
+    if(!str[i]) break;
+  }
   return;
 }
 
@@ -75,7 +101,7 @@ unsigned short get_cursor_offset(void){
 
 //obtem o offset do cursor
 unsigned short get_offset(unsigned short col, unsigned short linha){
-  return 2*(linha * MAX_COL)+col;
+   return (linha * MAX_COL * 2)+(col*2);
 }
 
 //define a posicao do cursor
@@ -102,6 +128,8 @@ void clear(void){
     mem[i] = ' ';
     mem[i+1] = BLACK_ON_BLACK;
   }
+  set_cursor_offset(get_offset(0,0));
+
 }
 
 /*
