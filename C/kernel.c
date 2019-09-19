@@ -3,13 +3,19 @@
 
 void zmain(void){
   char str[] = {'x','X','x','\0'};//{'H','e','l','l','o',' ','W','o','r','l','d','!','\0'};
-  int index=0;
+  int index=0, offset;
+  char *v = (char*) 0xb8000;
 
-  //print(str,13,0xf);
-  putchar('X');
+set_cursor_offset(get_offset(0,15));
+offset = get_cursor_offset() + 1;
 
-  /*while(str[index++]){
-    putchar(str[index]);
-  }
-  while(1); //loop infinito*/
+
+  //putchar('X');
+  putchar_at('X',16,13,GREEN_ON_BLACK);
+
+  /*v[offset] = 'X';
+  v[offset+1] = 0xa;*/
+
+
+  while(1); //loop infinito
 }
