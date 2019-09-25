@@ -1,24 +1,23 @@
+/*Algo estranho se passa: o índice dos vectores começa de 1 e não de 0
+Mas... como se diz: "Se finciona, não mexa!"
+
+Rafael Marcos 24-9-2019 21:17 GMT+1
+*/
+
 #include "HEADER/keyboard.h"
 #include "HEADER/screen.h"
+#include "HEADER/string.h"
 
 void zmain(void){
-  char str[] = {'x','X','x','\0'};//{'H','e','l','l','o',' ','W','o','r','l','d','!','\0'};
-  char ola[] = {'H','e','l','l','o',' ','W','o','r','l','d','!','\0'};
+  char str[] = "xXx", c;
+  char ola[] = "BUGUEI";
   int index=0, offset;
-  char *v = (char*) 0xb8000;
 
-  /*clear();
-  putchar('>');
-  putchar(' ');
-  putchar('?');*/
-
-  set_cursor_offset(get_offset(0,17));
-  while(1){
-    putchar(ola[index]);
-    ++index;
-    if(!ola[index]) break;
-  }
-  //putstr(ola);
+bsod();
+//putstr("BUGEUI!!!");
+/*for (index=1; ola[index] != 0; index++){
+  putchar(ola[index]);
+}*/
 
   while(1); //loop infinito
 }

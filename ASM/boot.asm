@@ -36,5 +36,3 @@ DEP db "DONE",10,13,0 ;apenas para depuracao
 
 times 510-($-$$) db 0xff
 dw 0xaa55
-
-E:

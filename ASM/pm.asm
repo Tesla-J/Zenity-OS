@@ -26,4 +26,4 @@ start_pm:
   mov edx, 0x0f
   mov esi, PM_MSG
   call print_pm
-  jmp E;0x1000 ;esntrada do kernel
+  jmp 0x1000 ;esntrada do kernel
