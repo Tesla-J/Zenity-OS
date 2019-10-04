@@ -136,7 +136,7 @@ void bsod(void){
     putchar_at(msg[i], c,0,0x1f); //branco no azul
   }
 
-  putstr("BUGEUI... :(\n\n\tContacte o Criador!");
+  putstr_at("BUGEUI... :(\n\n\tContacte o Criador!", -1,-1, 0x1f);
   return;
 
 }

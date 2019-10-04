@@ -13,8 +13,8 @@ void zmain(void){
   char ola[] = "BUGUEI";
   int index=0, offset;
 
-bsod();
-//putstr("BUGEUI!!!");
+nwln();
+putstr("BUGEUI!!!");
 /*for (index=1; ola[index] != 0; index++){
   putchar(ola[index]);
 }*/
