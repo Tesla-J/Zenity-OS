@@ -37,10 +37,10 @@ extern void isr31();
 
 //tipo que armazena os valores dos registros na stack
 typedef struct{
-  unsigned ds;
-  unsigned edi, esi, ebp, esp, ebx, edx, ecx, eax;
-  unsigned int_no, err_num;
-  unsigned eip, cs, eflags, useresp, ss;
+  unsigned long ds;
+  unsigned long edi, esi, ebp, esp, ebx, edx, ecx, eax;
+  unsigned long int_no, err_num;
+  unsigned long eip, cs, eflags, useresp, ss;
 } stk_reg;
 
 //pritotipos

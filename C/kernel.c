@@ -17,7 +17,7 @@ isr_install();
   putstr("Configurando Interrupts\n");
   putstr("Interrupts confiurados\nIniciando testes...");
 
-  asm volatile ("int $3");
+  asm volatile ("int $0");
 
   while(1);
 }

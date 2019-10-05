@@ -37,6 +37,7 @@ void isr_install(){
   set_idt_gate(30, (unsigned long)isr30);
   set_idt_gate(31, (unsigned long)isr31);
 
+  set_idt();
 }
 
 //vector das mensagens de cada exception
@@ -82,5 +83,6 @@ char *except_msg[] = {
 //mostra o resultado do interrupt
 void isr_handler(stk_reg r){
   char *s;
-  putstr_at(except_msg[r.int_no], 0, 21, RED_ON_BLACK);
+  //putstr_at(except_msg[r.int_no], -1, -1, RED_ON_BLACK);
+  putstr(except_msg[r.int_no]);
 }

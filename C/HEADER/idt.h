@@ -14,7 +14,7 @@ typedef struct{
 //idt registrer
 typedef struct{
   unsigned short limit;
-  unsigned base;
+  unsigned long base;
 } __attribute__((packed)) idt_reg;
 
 #define IDT_ENTRIES 256

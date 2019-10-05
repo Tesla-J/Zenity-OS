@@ -10,6 +10,6 @@ void set_idt_gate(int n, unsigned long handler){
 
 void set_idt(void){
   reg.base = (unsigned long) &idt;
-  reg.limit = IDT_ENTRIES * (sizeof (idt_gate) -1 );
-  asm volatile ("lidt (%0)" : : "r" (&reg));
+  reg.limit = (IDT_ENTRIES * sizeof (idt_gate)) -1 ;
+  asm volatile ("lidtl (%0)" : : "r" (&reg));
 }
