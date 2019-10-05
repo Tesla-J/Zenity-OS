@@ -7,17 +7,17 @@ Rafael Marcos 24-9-2019 21:17 GMT+1
 #include "HEADER/keyboard.h"
 #include "HEADER/screen.h"
 #include "HEADER/string.h"
+#include "HEADER/idt.h"
+#include "HEADER/isr.h"
 
 void zmain(void){
-  char str[] = "xXx", c;
-  char ola[] = "BUGUEI";
-  int index=0, offset;
+isr_install();
 
-nwln();
-putstr("BUGEUI!!!");
-/*for (index=1; ola[index] != 0; index++){
-  putchar(ola[index]);
-}*/
+  putstr("\n\nKernel Iniciado\n\n");
+  putstr("Configurando Interrupts\n");
+  putstr("Interrupts confiurados\nIniciando testes...");
 
-  while(1); //loop infinito
+  asm volatile ("int $3");
+
+  while(1);
 }
