@@ -13,11 +13,10 @@ Rafael Marcos 24-9-2019 21:17 GMT+1
 void zmain(void){
 isr_install();
 
-  putstr("\n\nKernel Iniciado\n\n");
-  putstr("Configurando Interrupts\n");
-  putstr("Interrupts confiurados\nIniciando testes...");
-
-  asm volatile ("int $0");
+  putstr("\n\n Kernel Iniciado\n\n");
+  putstr(" Configurando Interrupts\n");
+  asm volatile ("int $32");
+  putstr(" Interrupts confiurados\n Iniciando testes...");
 
   while(1);
 }

@@ -1,6 +1,7 @@
 #include "HEADER/isr.h"
 #include "HEADER/screen.h"
 #include "HEADER/idt.h"
+#include "HEADER/io.h"
 
 //configura os idt gates
 void isr_install(){
@@ -36,6 +37,36 @@ void isr_install(){
   set_idt_gate(29, (unsigned long)isr29);
   set_idt_gate(30, (unsigned long)isr30);
   set_idt_gate(31, (unsigned long)isr31);
+
+  //remap the PICs
+  byte_out(0x11, 0x20); //master
+  byte_out(0x20,0x21);
+  byte_out(0x4,0x21);
+  byte_out(0x1,0x21);
+  byte_out(0x0,0x21);
+  byte_out(0x11, 0xa0); //slave
+  byte_out(0x28,0xa1);
+  byte_out(0x2,0xa1);
+  byte_out(0x1,0xa1);
+  byte_out(0x0,0xa1);
+
+  //IRQs
+  set_idt_gate(32, (unsigned long)irq0);
+  set_idt_gate(33, (unsigned long)irq1);
+  set_idt_gate(34, (unsigned long)irq2);
+  set_idt_gate(35, (unsigned long)irq3);
+  set_idt_gate(36, (unsigned long)irq4);
+  set_idt_gate(37, (unsigned long)irq5);
+  set_idt_gate(38, (unsigned long)irq6);
+  set_idt_gate(39, (unsigned long)irq7);
+  set_idt_gate(40, (unsigned long)irq8);
+  set_idt_gate(41, (unsigned long)irq9);
+  set_idt_gate(42, (unsigned long)irq10);
+  set_idt_gate(43, (unsigned long)irq11);
+  set_idt_gate(44, (unsigned long)irq12);
+  set_idt_gate(45, (unsigned long)irq13);
+  set_idt_gate(46, (unsigned long)irq14);
+  set_idt_gate(47, (unsigned long)irq15);
 
   set_idt();
 }
@@ -85,4 +116,13 @@ void isr_handler(stk_reg r){
   char *s;
   //putstr_at(except_msg[r.int_no], -1, -1, RED_ON_BLACK);
   putstr(except_msg[r.int_no]);
+}
+
+void irq_handler(stk_reg r){
+  //enviando EOI
+  if(!r.int_no)
+    byte_out(0x20, 0xa0);
+  byte_out(0x20, 0x20);
+  
+  putstr("IRQ acionado");
 }
