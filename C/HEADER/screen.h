@@ -1,3 +1,4 @@
+#ifndef _ZSC
 #define _ZSC
 
 #define VID_MEM 0xb8000
@@ -28,3 +29,5 @@ void nwln(void);
 void tab(void);
 unsigned short get_row(unsigned short offset);
 unsigned short get_col(unsigned short offset);
+void scroll();
+#endif

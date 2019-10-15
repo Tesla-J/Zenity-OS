@@ -16,8 +16,10 @@ void putchar_at(char ch, short col, short linha, char attr){
     set_cursor_offset(get_offset(col,linha));
     offset = get_cursor_offset();
   }
-  else
+  else{
     offset = get_cursor_offset();
+    if (offset >= get_offset(0,24)) scroll();
+  }
 
   switch(ch){
     case '\n': nwln(); return; //para a proxima linha
@@ -40,13 +42,14 @@ void putchar(char ch){
 
 //funcao para imprimir string em posicao especifica
 void putstr_at(char str[], short col, short linha, unsigned short attr){
-  unsigned short i=1;
+  unsigned short i=0;
 
   if(col >= MAX_COL || linha >= MAX_ROW) return;
 
   while(1){
     putchar_at(str[i], col, linha, attr);
     ++i;
+    ++col;
     if (!str[i]) break;
   }return;
 }
@@ -166,4 +169,18 @@ unsigned short get_row(unsigned short offset){
 //retorna a coluna actual
 unsigned short get_col(unsigned short offset){
   return offset%(MAX_COL*2);
+}
+
+//efeito de rolagem
+void scroll(){
+  int linha, coluna, offset,aux_offset;
+  char *mem = (char*) 0xb8000;//VID_MEM;
+  for(linha=1; linha < MAX_ROW; linha++){
+    for(coluna=0; coluna<(MAX_COL*2); coluna++){
+      offset = get_offset(coluna, linha);
+      aux_offset = get_offset(coluna, linha-1);
+      mem[aux_offset] = mem[offset];
+      mem[aux_offset+1] = mem[offset+1];
+    }
+  }
 }

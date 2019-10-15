@@ -12,7 +12,9 @@ BIN/kernel.bin: C/*.c ASM/k_entry.asm C/HEADER/*.h ASM/interrupts.asm
 	gcc -m32 -ffreestanding -c C/keyboard.c -o BIN/keyboard.o
 	gcc -m32 -ffreestanding -c C/idt.c -o 	BIN/idt.o
 	gcc -m32 -ffreestanding -c C/isr.c -o 	BIN/isr.o
+	gcc -m32 -ffreestanding -c C/timer.c -o BIN/timer.o
+	gcc -m32 -ffreestanding -c C/util.c -o BIN/util.o
 	nasm ASM/k_entry.asm -f elf -o BIN/k_entry.o
 	nasm ASM/interrupts.asm -f elf -o BIN/interrupts.o
-	ld -melf_i386 --Ttext 0x1000 BIN/k_entry.o BIN/kernel.o BIN/interrupts.o BIN/isr.o BIN/idt.o BIN/io.o BIN/screen.o BIN/string.o BIN/keyboard.o --oformat binary -o $@
+	ld -melf_i386 --Ttext 0x1000 BIN/k_entry.o BIN/kernel.o BIN/timer.o BIN/interrupts.o BIN/isr.o BIN/idt.o BIN/io.o BIN/screen.o BIN/string.o BIN/keyboard.o BIN/util.o --oformat binary -o $@
 #devido a modificações, isto está assim

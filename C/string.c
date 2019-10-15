@@ -2,7 +2,7 @@
 
 
 //retorna tamanho da string (sem contar '\0')
-unsigned int strlen(char str[]){
+unsigned strlen(char str[]){
   int c;
 
   for(c=0; str[c] != 0; c++);
@@ -27,4 +27,15 @@ void strcat(char* str1, char* str2){
   }
   str1[s1len] = '\0';
   return;
+}
+
+//inverte uma string
+char* revstr(char* str){
+  char *aux;
+  int i, len=strlen(str) -1;
+
+  for (i=0; str[i]; i++, len--){
+    aux[i] = str[len];
+  }
+  return (char*) aux;
 }

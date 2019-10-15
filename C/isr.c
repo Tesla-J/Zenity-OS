@@ -123,6 +123,6 @@ void irq_handler(stk_reg r){
   if(!r.int_no)
     byte_out(0x20, 0xa0);
   byte_out(0x20, 0x20);
-  
-  putstr("IRQ acionado");
+
+  putstr(" IRQ acionado\n");
 }
