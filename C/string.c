@@ -3,10 +3,15 @@
 
 //retorna tamanho da string (sem contar '\0')
 unsigned strlen(char str[]){
-  int c;
+  int c,len;
+  char* aux;
 
-  for(c=0; str[c] != 0; c++);
-  return c;
+  aux=str;
+
+  for(c=0; str[c]; c++);
+  aux += c;
+  len = (aux-str);
+  return len;
 }
 
 //copia uma string para um array/ponteiro
@@ -38,4 +43,17 @@ char* revstr(char* str){
     aux[i] = str[len];
   }
   return (char*) aux;
+}
+
+short strcmp(char str1[], char str2[]){
+  int l1=strlen(str1), l2=strlen(str2), index;
+
+  for(; str1[index] && str2[index]; index++){
+    if (str1[index] == str2[index]){--l1; --l2}
+  }
+
+  if(l1==0 && l2==0) return -1;
+  else if (l1 > l2) return 1;
+  else if (l2 > l1) return 2;
+  else return 0;
 }

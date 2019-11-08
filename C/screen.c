@@ -1,6 +1,7 @@
 #include "HEADER/screen.h"
 #include "HEADER/io.h"
 #include "HEADER/string.h"
+#include "HEADER/util.h"
 
 
 //funcao para imprimir caractere numa posicao especifica
@@ -24,10 +25,11 @@ void putchar_at(char ch, short col, short linha, char attr){
   switch(ch){
     case '\n': nwln(); return; //para a proxima linha
     case '\t': tab(); return;
+    case '\b': set_cursor_offset(back_space(offset)); //offset -= 2; set_cursor_offset(offset); return;
   }
 
-  mem [offset+2] = ch;
-  mem [offset+3] = attr;
+  mem [offset] = ch;
+  mem [offset+1] = attr;
   offset += 2;
   set_cursor_offset(offset);
 
@@ -44,24 +46,20 @@ void putchar(char ch){
 void putstr_at(char str[], short col, short linha, unsigned short attr){
   unsigned short i=0;
 
-  if(col >= MAX_COL || linha >= MAX_ROW) return;
+  //if(col >= MAX_COL || linha >= MAX_ROW) return;
 
-  while(1){
+  for(i=0; str[i]; i++){
     putchar_at(str[i], col, linha, attr);
     ++i;
     ++col;
-    if (!str[i]) break;
   }return;
 }
 
 //funcao imprimir string
 void putstr(char str[]){
-  unsigned int i=1;
-  while(1){
-    putchar(str[i]);
-    ++i;
-    if(!str[i]) break;
-  }
+  unsigned int i;
+
+  for(i=0; str[i]; i++) putchar(str[i]);
   return;
 }
 
@@ -183,4 +181,14 @@ void scroll(){
       mem[aux_offset+1] = mem[offset+1];
     }
   }
+}
+
+//apaga um caractere
+unsigned short back_space(unsigned short offset){
+  unsigned char* mem = (unsigned char*) VID_MEM;
+
+  mem[offset-2] = '\0';
+  mem[offset-1] = 0x0;
+  set_cursor_offset(offset-2);
+  return offset-2;
 }

@@ -21,7 +21,7 @@ typedef struct{
 idt_gate idt[IDT_ENTRIES];
 idt_reg  reg;
 
-//Prototopos
+//Prototipos
 void set_idt_gate(int n, unsigned long handler);
 void set_idt(void);
 #endif

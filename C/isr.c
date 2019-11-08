@@ -3,6 +3,8 @@
 #include "HEADER/idt.h"
 #include "HEADER/io.h"
 
+isr_t int_handler[256];
+
 //configura os idt gates
 void isr_install(){
   set_idt_gate(0, (unsigned long)isr0);
@@ -120,9 +122,18 @@ void isr_handler(stk_reg r){
 
 void irq_handler(stk_reg r){
   //enviando EOI
-  if(!r.int_no)
-    byte_out(0x20, 0xa0);
-  byte_out(0x20, 0x20);
+  if(r.int_no >= 40)
+    byte_out(0x20, 0xa0); //to slava
+  byte_out(0x20, 0x20); //to master
 
-  putstr(" IRQ acionado\n");
+  if (int_handler[r.int_no]){
+    isr_t handler = int_handler[r.int_no];
+    handler(r);
+  }
+  //putstr(" IRQ acionado\n");
+}
+
+//adiciona uma funcao num interrupt
+void reg_int_handler(unsigned char n, isr_t handler){
+  int_handler[n] = handler;
 }

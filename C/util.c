@@ -8,8 +8,8 @@ long stoi(char* s){
 
   for(index=0; s[index]; index++){
     num *= base;
-    digit = s[index];
-    num += digit
+    digit = atoi(s[index]);
+    num += digit;
   }
   return num;
 }
@@ -18,20 +18,22 @@ long stoi(char* s){
 char* itos(long i){
   short q,r;
   char* str;
+  int index;
 
-  for(int i=0; i; i/=10){
+  for(index=0; i!=0; i/=10, index++){
     r = i%10;
-    str[i] = itoa(r);
+    str[index] = itoa(r);
   }
   return revstr(str);
 }
 
 //converte ascii pata int
 int atoi(char a){
-  return (int) (a-'1');
+  return (int) (a-'0');
 }
 
 ///converte int para ascii
 char itoa(int i){
-  return (char) (i+'1');
+  char low_i = (i & 0x00ff);
+  return (char) (low_i+48);
 }

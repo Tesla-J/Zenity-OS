@@ -30,4 +30,5 @@ void tab(void);
 unsigned short get_row(unsigned short offset);
 unsigned short get_col(unsigned short offset);
 void scroll();
+unsigned short back_space (unsigned short offset); //apaga um caractere e retorna o novo nedereço
 #endif

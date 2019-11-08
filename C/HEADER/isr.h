@@ -83,4 +83,7 @@ void isr_install();
 void isr_handler(stk_reg r);
 void irq_handler(stk_reg r);
 
+typedef (*isr_t)(stk_reg);
+//adiciona uma funcao num interrupt
+void reg_int_handler(unsigned char n, isr_t handler);
 #endif

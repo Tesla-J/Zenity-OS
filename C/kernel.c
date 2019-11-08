@@ -10,15 +10,25 @@ Rafael Marcos 24-9-2019 21:17 GMT+1
 #include "HEADER/idt.h"
 #include "HEADER/isr.h"
 #include "HEADER/timer.h"
+#include "HEADER/util.h"
 
 void zmain(void){
-isr_install();
+  int n=0;
+  char* c;
+  isr_install(); //defini os interrupts
 
   putstr("\n\n Kernel Iniciado\n\n");
   putstr(" Configurando Interrupts\n");
-  putstr(" Interrupts confiurados\n Iniciando timer...");
+  putstr(" Interrupts confiurados\n Iniciando timer...\n\n");
+
   asm volatile("sti");
   init_timer(0xb000);
+  k_init();
 
-  while(1);
+  clear(0xf);
+  putstr("&> ");
+  //back_space(get_cursor_offset());
+
+
+  //while(1);
 }
