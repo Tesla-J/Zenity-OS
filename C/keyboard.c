@@ -3,6 +3,7 @@
 #include "HEADER/screen.h"
 #include "HEADER/isr.h"
 #include "HEADER/idt.h"
+#include "HEADER/string.h"
 
 void clear_buffer(void){
   for(int i=0; keys_buffer[i]; i++) keys_buffer[i]='\0';
@@ -11,12 +12,13 @@ void clear_buffer(void){
 
 void find_command(char* c){
   if(!strcmp("power",c)) shine();
-  else putstr_at("Comando desconecido!");
+  else if(!strcmp("halt",c)) asm volatile("hlt");
+  else putstr("Comando desconecido!\n");
 }
 
 void put_to_buffer(char key){
   //caps lock
-  if(caps) if ( ((key >= 'A') && (key<='Z')) || ((key >='a') && (key <= 'z')) )  key ^= 0x20;
+  if(!caps) if ( ((key >= 'A') && (key<='Z')) || ((key >='a') && (key <= 'z')) )  key ^= 0x20;
   keys_buffer[buffer_position] = key;
 
   ++buffer_position;
@@ -56,14 +58,38 @@ static void k_check(){
     case 0x18: put_to_buffer('O'); break;
     case 0x19: put_to_buffer('P'); break;
 
-
-
-    case 0x1f: put_to_buffer('S'); break;
     case 0x1c: nwln();
-               find_command(keys_buffer)
+               find_command(keys_buffer);
                putstr("&> ");
                clear_buffer();
                break; //ENTER
+    case 0x1e: put_to_buffer('A'); break;
+    case 0x1f: put_to_buffer('S'); break;
+    case 0x20: put_to_buffer('D'); break;
+    case 0x21: put_to_buffer('F'); break;
+    case 0x22: put_to_buffer('G'); break;
+    case 0x23: put_to_buffer('H'); break;
+    case 0x24: put_to_buffer('H'); break;
+    case 0x25: put_to_buffer('J'); break;
+    case 0x26: put_to_buffer('K'); break;
+    case 0x2a: break; //L SHIFT
+
+    case 0x2c: put_to_buffer('Z'); break;
+    case 0x2d: put_to_buffer('X'); break;
+    case 0x2e: put_to_buffer('C'); break;
+    case 0x2f: put_to_buffer('V'); break;
+    case 0x30: put_to_buffer('B'); break;
+    case 0x31: put_to_buffer('N'); break;
+    case 0x32: put_to_buffer('M'); break;
+
+    case 0x36: break; //R SHIFT
+    case 0x37: break; //PtScr
+    case 0x38: break; //Alt
+    case 0x3b: break; //F1 - usarei como help
+
+
+
+    case 0x1d: break; //CTRL
     case 0x3a: caps ^= 1; break; //caps lock
   }
 }

@@ -2,7 +2,7 @@
 ;carrega os restantes sectores
 load:
   mov ah, 2
-  mov al, 33
+  mov al, 37
   mov ch, 0
   mov cl, 2
   mov dh, 0

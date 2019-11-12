@@ -49,7 +49,7 @@ short strcmp(char str1[], char str2[]){
   int l1=strlen(str1), l2=strlen(str2), index;
 
   for(; str1[index] && str2[index]; index++){
-    if (str1[index] == str2[index]){--l1; --l2}
+    if (str1[index] == str2[index]){--l1; --l2;}
   }
 
   if(l1==0 && l2==0) return -1;
